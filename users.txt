@@ -1,0 +1,9 @@
+sai,1234S@,Player,Hyderabad,1234578909
+raj,1234R@,Player,Karimnagar,1234567890
+tej,1234T@,Coach,Jagtial,-
+ram,1234R@,Player,Peddapalli,1234567890
+ram1,1234R@,Player,Nagarkurnool,1234567890
+hlo,1234H@,Player,Karimnagar,1234567890
+sai1,1234S@,Player,Jogulamba Gadwal,1234567890
+mahesh,1234M@,Player,Hyderabad,1234567890
+charan,Charan@13,Player,Hyderabad,9346687732
