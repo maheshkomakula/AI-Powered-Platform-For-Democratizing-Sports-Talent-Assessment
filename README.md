@@ -99,5 +99,5 @@ Contributions and suggestions are welcome. When contributing:
 
 ---
 
-If you would like, I can also create a `requirements.txt`, add password hashing, or scaffold an SQLite migration and example. Tell me which improvement you'd like next.
+
 
