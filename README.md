@@ -1,103 +1,89 @@
 
-# SIH — Authentication Demo (Updated)
+# AI-Powered-Platform-For-Democratizing-Sports-Talent-Assessment
 
-Professional, minimal demonstration of a local authentication flow implemented in plain Python. This repository is intended for learning and prototyping only — it is not designed for production use.
+Compact desktop prototype demonstrating basic sports talent assessment using pose-based video analysis and a simple role-based dashboard.
 
-## Contents
-- Overview
-- Requirements
-- Installation
-- Running the application
-- Usage examples
-- Project structure
-- Security & limitations
-- Suggested improvements
-- Contributing
+> NOTE: This project is a learning/prototype implementation. Do not use it to store real user credentials or deploy as-is.
 
-## Overview
-This project provides a compact example of user registration, authentication, and a post-login dashboard using a file-based user store. The code is intentionally small and readable to facilitate study and extension.
+## What this repository contains
+- A Tkinter-based GUI for user registration and login (`register.py`, `login.py`).
+- A role-aware dashboard with player/coach views and tournament listings (`dashboard.py`).
+- A video analysis tool that uses MediaPipe pose estimation and OpenCV to compute angles and generate coaching suggestions (`main.py`).
+- A simple, plain-text user database: `users.txt` (CSV format: `username,password,role,location,phone`).
 
-## Requirements
-- Python 3.8 or later
-- Optional: `pip` to install extra dependencies when adding libraries
+## How the app runs (execution path)
+1. Typical start: `python login.py` — opens the Login UI.
+2. On successful login the app launches `dashboard.launch_dashboard(...)` from `dashboard.py`.
+3. Players may fill the player form and click **Launch Video Analysis**, which calls `main.run_app()` to open the analyzer window.
+4. The analyzer loads video files, processes frames with MediaPipe, computes angles with NumPy, and overlays suggestions on frames using OpenCV and PIL for display.
 
-## Installation
-1. Clone or copy the project to your local machine.
-2. From the project root create and activate a virtual environment:
+## Techniques and design choices
+- Pose estimation: MediaPipe Pose for landmark extraction.
+- Video processing: OpenCV for reading frames, drawing shapes, and resizing.
+- Numeric math: NumPy for vector arithmetic and angle calculations.
+- GUI: Tkinter + Pillow for desktop UI and image widgets.
+- Persistence: Plain-text CSV file (`users.txt`) for quick demonstration.
+- Suggestion logic: Rule-based heuristics (thresholds and angle rules) implemented in `main.py`.
+
+## Dependencies (install before running)
+Install into a virtual environment. Minimal packages used in this project:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install mediapipe opencv-python numpy Pillow
+```
+
+Optional but recommended tools for development:
+- `bcrypt` or `passlib` for secure password hashing (not currently used).
+
+## Project structure (key files)
+- [login.py](login.py) — Login UI and authentication flow (entrypoint).
+- [register.py](register.py) — User registration with validation and role selection.
+- [dashboard.py](dashboard.py) — Role-based dashboard, player forms, tournament listings, and links to video analysis.
+- [main.py](main.py) — Video analyzer: MediaPipe setup, frame processing, and suggestion rules.
+- [users.txt](users.txt) — Plain-text user store (CSV lines).
+- [logo.png](logo.png) — Optional logo shown in UIs.
+
+## How to use (quick start)
+1. Create and activate a virtual environment (PowerShell):
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-3. If you add external libraries, record them in `requirements.txt` and install with:
+2. Install dependencies:
 
 ```powershell
-pip install -r requirements.txt
+pip install mediapipe opencv-python numpy Pillow
 ```
 
-## Running the application
-Run the primary entry point from the project root:
+3. Register a user (optional) and login:
 
 ```powershell
-python main.py
+python register.py   # create an account (or edit users.txt manually)
+python login.py      # start the app and login
 ```
 
-Depending on the implementation, `main.py` will route to the registration or login flow, or you can run the flow scripts directly:
-
-```powershell
-python register.py
-python login.py
-```
-
-## Usage examples
-- Register a user: run `python register.py` and follow the prompts to create a username and password.
-- Authenticate: run `python login.py` and provide the registered credentials; on success you will be shown the dashboard implemented by `dashboard.py`.
-
-Example (CLI):
-
-```powershell
-python register.py
-# Enter username: alice
-# Enter password: ********
-
-python login.py
-# Username: alice
-# Password: ********
-# Login successful — launching dashboard
-```
-
-## Project structure
-- `main.py` — application entry point
-- `register.py` — user registration script
-- `login.py` — authentication script
-- `dashboard.py` — post-login interface
-- `users.txt` — local, plain-text user store (one record per line)
+4. From the dashboard, for Players: fill the form and click **Launch Video Analysis**, then upload a video file (mp4/mov/avi).
 
 ## Security & limitations
-- The current implementation uses a plaintext file (`users.txt`) to store credentials. This is insecure and suitable only for demonstrations.
-- No rate-limiting, account lockout, or input sanitization is enforced.
+- Passwords are stored in plain text in `users.txt`. This is insecure — do not store real user credentials here.
+- There is no server-side validation, rate limiting, or secure transport (TLS) — this is a local desktop prototype.
+- The analysis logic is heuristic and not a substitute for professional coaching or validated biomechanical metrics.
 
-Recommendations for production readiness:
-- Use a database (SQLite for small deployments, PostgreSQL/MySQL for larger systems).
-- Hash passwords with a modern algorithm (e.g., `bcrypt`) and use per-password salts.
-- Use secure transport (TLS) when credentials are sent over a network.
-- Add input validation, logging, and brute-force protections.
+## Recommended next steps (prioritized)
+1. Add `requirements.txt` with pinned package versions.
+2. Replace `users.txt` with an SQLite database and hash passwords with `bcrypt`/`passlib`.
+3. Separate UI from analysis logic (move MediaPipe/OpenCV processing to a module) and add unit tests for math/heuristics.
+4. Add logging, input validation, and basic error handling for video formats.
+5. Optionally wrap as a minimal web service (Flask/FastAPI) for easier testing and integration.
 
-## Suggested improvements
-- Add `requirements.txt` and pin dependency versions.
-- Replace `users.txt` with an SQLite-backed user table and parameterized queries.
-- Integrate `bcrypt` for password hashing (`pip install bcrypt`).
-- Add unit tests for the register/login flows and CI configuration.
-- Provide a minimal web interface (Flask/FastAPI) for learning web authentication patterns.
-
-## Contributing
-Contributions and suggestions are welcome. When contributing:
-- Do not commit real user credentials or secrets.
-- Provide tests for new behavior.
-- Open an issue to discuss larger changes before implementing.
+## Notes from current repository
+- `users.txt` contains test users (example entries present). See `users.txt` for sample CSV lines.
+- The analyzer (`main.py`) expects MediaPipe and OpenCV to be available and uses a Tkinter window for interaction.
 
 ---
-
 
 
