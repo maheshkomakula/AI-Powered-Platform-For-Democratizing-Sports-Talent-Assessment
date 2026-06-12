@@ -24,7 +24,7 @@ export default function Profile() {
       }
       
       try {
-        const response = await fetch(`http://localhost:5000/api/profile/${currentUser.username}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/profile/${currentUser.username}`);
         if (response.ok) {
           const data = await response.json();
           setUser(data);
@@ -56,7 +56,7 @@ export default function Profile() {
     setMessage('');
     
     try {
-      const response = await fetch(`http://localhost:5000/api/profile/${user.username}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/profile/${user.username}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
